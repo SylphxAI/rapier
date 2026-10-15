@@ -34,9 +34,9 @@ check. With the scoped crates.io credential already supplied by the release
 environment, the publication commands are:
 
 ```sh
-bash publish.sh package --locked
-bash publish.sh publish --dry-run --locked
-bash publish.sh publish --locked
+bash publish.sh package
+bash publish.sh publish --dry-run
+bash publish.sh publish
 ```
 
 Only `sylphx-rapier2d` and `sylphx-rapier3d` are selected; the upstream testbeds,

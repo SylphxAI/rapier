@@ -18,6 +18,8 @@ FEATURES = ["serde-serialize", "debug-render", "parallel", "enhanced-determinism
 TARGET = Path(os.environ.get("CARGO_TARGET_DIR", ROOT / "target")).resolve()
 os.environ["CARGO_TARGET_DIR"] = str(TARGET)
 os.environ["CARGO_INCREMENTAL"] = "0"
+# Standalone archive tests do not inherit the workspace's dev opt-level = 1.
+os.environ["CARGO_PROFILE_TEST_OPT_LEVEL"] = "1"
 TARGET.mkdir(parents=True, exist_ok=True)
 RESULTS = TARGET / "package-check"
 RESULTS.mkdir(exist_ok=True)
