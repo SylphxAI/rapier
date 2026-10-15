@@ -214,7 +214,7 @@ mod test {
         let sb = &world.soft_bodies[handle];
         let mesh = sb.meshes().next().expect("the body has a collision mesh");
         let id = mesh.id();
-        let mut best = (0u32, 0u32, -1.0);
+        let mut best = (0u32, 0u32, -1.0 as Real);
         for v in 0..mesh.vertex_count() as u32 {
             for (e, element) in mesh.indices().iter().enumerate() {
                 if element.contains(&v) {
