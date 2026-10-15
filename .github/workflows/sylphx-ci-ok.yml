@@ -1,0 +1,55 @@
+# Builds this fork and runs the patch it carries, so a revision pinned by a
+# consumer is verified before it reaches one. The upstream project's own
+# workflow files are untouched: everything this fork adds lives here.
+#
+# The job name is the check context the organization's required-status-check
+# ruleset asks for, so it must stay `ci-ok`.
+name: Sylphx CI
+
+on:
+  pull_request:
+  merge_group:
+  # The post-merge run on the default branch proves the landing itself and puts
+  # a ci-ok result on the revision a consumer pins.
+  push:
+    branches: [keel/voxels-composite]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sylphx-ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  ci-ok:
+    name: ci-ok
+    runs-on: ${{ github.event_name == 'merge_group' && 'sylphx-linux-standard-merge' || 'sylphx-linux-standard' }}
+    timeout-minutes: 45
+    env:
+      CARGO_TERM_COLOR: always
+      # Incremental compilation only pays off for local rebuild loops.
+      CARGO_INCREMENTAL: 0
+    steps:
+      - name: Check out candidate
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v5.0.0
+        with:
+          persist-credentials: false
+
+      - name: Install Rust (workspace rust-version toolchain)
+        uses: dtolnay/rust-toolchain@6c977a6ca4077a0ceb28ffbe03f59d46e9ac8772 # v1
+        with:
+          toolchain: "1.86.0"
+
+      - name: Verify the patch this fork carries
+        run: |
+          set -euo pipefail
+          if [ ! -f crates/rapier3d/tests/voxels_ball_rolling.rs ]; then
+            echo "::error::crates/rapier3d/tests/voxels_ball_rolling.rs is missing. It is the test for the voxels pair-composite patch this fork carries (src/geometry/narrow_phase/pair_update.rs); this gate fails rather than pass with the patch and its test gone."
+            exit 1
+          fi
+          # Debug profile on purpose: the incremental solver-contact graph
+          # invariant is a debug_assert inside the step, so a release build
+          # would not check it.
+          cargo test -p rapier3d --test voxels_ball_rolling
