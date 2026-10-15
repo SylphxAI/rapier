@@ -29,6 +29,8 @@ checks its dependency graph against the source build, and runs the voxel
 regression through that consumer. The packaging script bundles the shared source
 tree and the unchanged upstream licence into each archive.
 
+Clippy deliberately matches [upstream's core CI](.github/workflows/rapier-ci-build.yml#L55): the default `cargo clippy` target scope with `-D warnings`; `--all-targets` additionally reports inherited test-only `unnecessary_cast` (`src/dynamics/soft_body/soft_body_contacts.rs`), `clone_on_copy` and `needless_range_loop` (`crates/rapier2d/tests/soft_contact_debug_render.rs`). The full archived test suites still run.
+
 Before publication, the exact release commit must have a successful `ci-ok`
 check. With the scoped crates.io credential already supplied by the release
 environment, the publication commands are:
