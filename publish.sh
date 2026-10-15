@@ -44,5 +44,5 @@ for crate in rapier2d rapier3d; do
 done
 
 # Only the layout is dirty; the clean-tree check above protects the source.
-cargo "$operation" --manifest-path "$ROOT/Cargo.toml" \
+cargo "$operation" --registry crates-io --manifest-path "$ROOT/Cargo.toml" \
     -p sylphx-rapier2d -p sylphx-rapier3d --allow-dirty "$@"
