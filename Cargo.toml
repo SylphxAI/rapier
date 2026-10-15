@@ -131,9 +131,9 @@ getrandom = { version = "0.2", features = ["js"] }
 wasm-bindgen = "0.2"
 
 # Internal crates (paths are relative to the workspace root)
-rapier2d = { version = "0.36.0", path = "crates/rapier2d" }
+rapier2d = { package = "sylphx-rapier2d", version = "=0.36.0-sylphx.1", path = "crates/rapier2d" }
 rapier2d-f64 = { version = "0.36.0", path = "crates/rapier2d-f64" }
-rapier3d = { version = "0.36.0", path = "crates/rapier3d" }
+rapier3d = { package = "sylphx-rapier3d", version = "=0.36.0-sylphx.1", path = "crates/rapier3d" }
 rapier3d-f64 = { version = "0.36.0", path = "crates/rapier3d-f64" }
 rapier_testbed2d = { version = "0.36.0", path = "crates/rapier_testbed2d" }
 rapier_testbed2d-f64 = { version = "0.36.0", path = "crates/rapier_testbed2d-f64" }

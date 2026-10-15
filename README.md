@@ -1,4 +1,48 @@
-> **Temporary fork for SylphxAI/keel#4525; upstream PR: (link added when filed); delete when released.**
+# Sylphx Rapier fork
+
+`sylphx-rapier2d` and `sylphx-rapier3d` are standing fork crates until upstream
+ships the voxel contact-graph fix. Version `0.36.0-sylphx.1` is upstream Rapier
+`0.36.0` plus the fix from `6d89b5e875d903080150dd957ebf1aed42bbb5ac` and its
+regression-test refinement from `1973c5c5c`. Voxel pairs must use the composite
+contact path so the incremental solver-contact graph stays consistent as a body
+moves between voxel cells.
+
+The packages retain upstream's Apache-2.0 licence, `LICENSE`, and Sébastien
+Crozet's attribution unchanged. Library names stay `rapier2d` and `rapier3d`, so
+only dependency declarations change; existing Rust imports stay the same:
+
+```toml
+rapier2d = { package = "sylphx-rapier2d", version = "=0.36.0-sylphx.1" }
+rapier3d = { package = "sylphx-rapier3d", version = "=0.36.0-sylphx.1" }
+```
+
+Parry, nalgebra, and the other dependencies come from crates.io. No other Rapier
+workspace crate needs publishing for these two packages. Consumers do not need a
+`[patch.crates-io]` entry. When upstream releases the fix, consumers can return to
+that upstream release and these fork crates no longer need new releases.
+
+## Packaging and publication
+
+Run `python3 scripts/check-packaged-consumer.py` in a build environment. It runs
+`cargo package`, builds an independent consumer against the extracted archives,
+checks its dependency graph against the source build, and runs the voxel
+regression through that consumer. The packaging script bundles the shared source
+tree and the unchanged upstream licence into each archive.
+
+Before publication, the exact release commit must have a successful `ci-ok`
+check. With the scoped crates.io credential already supplied by the release
+environment, the publication commands are:
+
+```sh
+bash publish.sh package --locked
+bash publish.sh publish --dry-run --locked
+bash publish.sh publish --locked
+```
+
+Only `sylphx-rapier2d` and `sylphx-rapier3d` are selected; the upstream testbeds,
+loaders, bindings, and f64 variants are not published by this fork's script.
+
+## Upstream Rapier
 
 <p align="center">
   <img src="./assets/rapier-logo.jpg" alt="crates.io">

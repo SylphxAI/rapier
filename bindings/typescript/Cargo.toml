@@ -14,8 +14,8 @@ strip = true # Workaround for https://github.com/bevyengine/bevy/issues/16030 (t
 # with the engine they ship alongside. The build crates' `rapier{2,3}d`
 # dependency requirement (see builds/prepare_builds/templates/Cargo.toml.tera)
 # must stay semver-compatible with the in-repo crate version for this to apply.
-rapier2d = { path = "../../crates/rapier2d" }
-rapier3d = { path = "../../crates/rapier3d" }
+sylphx-rapier2d = { path = "../../crates/rapier2d" }
+sylphx-rapier3d = { path = "../../crates/rapier3d" }
 
 # nalgebra and simba are still pulled from crates.io, matching the versions the
 # in-repo rapier crates depend on. Uncomment to build against local checkouts
