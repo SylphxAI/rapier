@@ -64,6 +64,14 @@ fn ball_rolling_on_voxels_floor_keeps_the_contact_graph_consistent() {
         step(&mut bodies, &mut colliders);
     }
     let pos = bodies[ball].translation();
-    assert!(pos.x > 0.0, "the ball rolled across the cells: x = {}", pos.x);
-    assert!((pos.y - radius).abs() < 0.1, "the ball stayed on the floor: y = {}", pos.y);
+    assert!(
+        pos.x > 0.0,
+        "the ball rolled across the cells: x = {}",
+        pos.x
+    );
+    assert!(
+        (pos.y - radius).abs() < 0.1,
+        "the ball stayed on the floor: y = {}",
+        pos.y
+    );
 }

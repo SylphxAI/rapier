@@ -1,11 +1,11 @@
 [package]
-name = "rapier2d"
-version.workspace = true
+name = "sylphx-rapier2d"
+version = "0.36.0-sylphx.1"
 authors.workspace = true
-description = "2-dimensional physics engine in Rust."
-documentation = "https://docs.rs/rapier2d"
+description = "Standing fork of Rapier 0.36.0 with the voxel contact-graph fix (2D physics)."
+documentation = "https://docs.rs/sylphx-rapier2d"
 homepage.workspace = true
-repository.workspace = true
+repository = "https://github.com/SylphxAI/rapier"
 readme = "../../README.md"
 categories.workspace = true
 keywords = ["physics", "dynamics", "rigid", "real-time", "impulse_joints"]
