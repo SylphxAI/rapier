@@ -1,3 +1,5 @@
+> **Temporary fork for SylphxAI/keel#4525; upstream PR: (link added when filed); delete when released.**
+
 <p align="center">
   <img src="./assets/rapier-logo.jpg" alt="crates.io">
 </p>
